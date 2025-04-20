@@ -6,21 +6,35 @@ import InputField from '../../components/layouts/InputField';
 import YellowButton from '../../components/layouts/YellowButton';
 import AuthCard from '../../components/layouts/AuthCard';
 import AuthRightSection from '../../components/layouts/AuthRightSection';
-
-
-
-
+import ProfilePhotoSelector from '../../components/layouts/ProfilePhotoSelector';
 
 const SignUp = () => {
   const [showModal, setShowModal] = useState(true);
   const [profilePic, setProfilePic] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [error, setError] = useState('');
 
 
-  const handleProfilePicChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfilePic(URL.createObjectURL(file)); 
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
     }
+
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return;
+    }
+    setError('');
+    console.log('Form submitted', { fullName, email, password, profilePic });
   };
 
   return (
@@ -36,7 +50,6 @@ const SignUp = () => {
       )}
 
       <div className="flex h-screen overflow-y-hidden font-poppins">
-
         {/* Left Section */}
         <div className="w-1/3 bg-[#F4F4FF] px-12 py-8 flex flex-col relative">
           <Logo />
@@ -45,36 +58,34 @@ const SignUp = () => {
               <h2 className="text-3xl font-semibold text-black">Create An account</h2>
               <p className="text-2xl text-slate-700 mb-5">Join us today by entering your details</p>
 
-              <form className="space-y-5 mt-2">
-                <div className="flex justify-center mb-4">
-                  <label htmlFor="profilePic" className="cursor-pointer">
-                    <input
-                      type="file"
-                      id="profilePic"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleProfilePicChange}
-                    />
-                    <div
-                      className={`w-24 h-24 rounded-full overflow-hidden ${profilePic ? 'border-4 border-[#2D02AF]' : 'border-2 border-slate-400'}`}
-                    >
-                      {profilePic ? (
-                        <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-[#F4F4FF] flex items-center justify-center text-[#2D02AF] text-xl">+</div>
-                      )}
-                    </div>
-                  </label>
-                </div>
+              <form className="space-y-5 mt-2" onSubmit={handleSubmit}>
+                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-                <p className="text-s text-slate-700 mt-4 mb-8">
-                Hi Buddy</p>
+                <p className="text-s text-slate-700 mt-4 mb-2">Hi Buddy</p>
 
-              
-                <InputField type="text" placeholder="Full Name" />
-                <InputField type="email" placeholder="Email" />
-                <InputField type="password" placeholder="Password" />
-          
+                <InputField
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+
+                <InputField
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <InputField
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                {error && <p className="text-red-500 text-sm -mt-3">{error}</p>}
+
                 <YellowButton text="Sign Up" type="submit" />
               </form>
 
@@ -90,7 +101,6 @@ const SignUp = () => {
 
         {/* Right Section */}
         <AuthRightSection />
-
       </div>
     </>
   );
