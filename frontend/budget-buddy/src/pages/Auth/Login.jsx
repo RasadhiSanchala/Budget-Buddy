@@ -12,7 +12,7 @@ import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/userContext';
 
 const Login = () => {
-  const [showModal, setShowModal] = useState(true);
+ 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,8 +35,12 @@ const Login = () => {
 
       if(token){
         localStorage.setItem('token', token);
-        updateUser(user);
-        navigate('/dashboard');
+        updateUser({
+          name: user.fullName,
+          email: user.email,
+          profilePhoto: user.profileImageUrl, // 💥 this is what Sidebar will use
+        });
+        navigate('/Home');
       }
 
      
@@ -52,15 +56,6 @@ const Login = () => {
 
   return (
     <>
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <AuthCard>
-            <h2 className="text-2xl font-bold mb-4 text-[#2D02AF]">Welcome to Budget Buddy 💰</h2>
-            <p className="mb-6 text-lg text-gray-700">Are you ready to login and start adding your transactions?</p>
-            <YellowButton text="Yes, I'm Ready" onClick={() => setShowModal(false)} />
-          </AuthCard>
-        </div>
-      )}
 
       <div className="flex h-screen relative overflow-y-hidden font-poppins">
         {/* Left Section */}
