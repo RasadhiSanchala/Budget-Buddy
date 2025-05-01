@@ -4,9 +4,10 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
+ 
   useEffect(() => {
     const savedImage = localStorage.getItem('profilePic');
-    if (savedImage) {
+    if (savedImage && isValidUrl(savedImage)) {
       setPreviewUrl(savedImage);
     }
   }, []);
@@ -16,6 +17,15 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
       localStorage.setItem('profilePic', previewUrl);
     }
   }, [previewUrl]);
+
+  const isValidUrl = (url) => {
+    
+    try {
+      return Boolean(new URL(url));
+    } catch (_) {
+      return false;
+    }
+  };
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
