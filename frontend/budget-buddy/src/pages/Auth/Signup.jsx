@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../../components/layouts/Logo';
 import InputField from '../../components/layouts/InputField';
@@ -7,6 +7,12 @@ import YellowButton from '../../components/layouts/YellowButton';
 import AuthCard from '../../components/layouts/AuthCard';
 import AuthRightSection from '../../components/layouts/AuthRightSection';
 import ProfilePhotoSelector from '../../components/layouts/ProfilePhotoSelector';
+
+import { UserContext } from '../../context/userContext';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS }   from '../../utils/apiPaths';
+import uploadImage from '../../utils/uploadImage';  
+
 
 const SignUp = () => {
   const [showModal, setShowModal] = useState(true);
@@ -16,13 +22,15 @@ const SignUp = () => {
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
 
+  const { updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const isValidEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let profileImageUrl = "";
 
     if (!isValidEmail(email)) {
       setError('Please enter a valid email address');
@@ -33,8 +41,39 @@ const SignUp = () => {
       setError('Password must be at least 8 characters');
       return;
     }
+
     setError('');
-    console.log('Form submitted', { fullName, email, password, profilePic });
+
+    try {
+
+      //Upload image if present
+      if(profilePic){
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+      const response = await axiosInstance.post(
+        API_PATHS.AUTH.REGISTER,
+        { fullName, email, password, profileImageUrl }
+      );
+    
+
+      const { token, user } = response.data;
+
+      if (token) {
+        localStorage.setItem('token', token);
+        updateUser(user);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.error("Signup error response:", err.response);
+      console.error("Signup error message:", err.message);
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    }
+    
   };
 
   return (
