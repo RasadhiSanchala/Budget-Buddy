@@ -62,7 +62,7 @@ const SignUp = () => {
       if (token) {
         localStorage.setItem('token', token);
         updateUser(user);
-        navigate('/dashboard');
+        navigate('/Login');
       }
     } catch (err) {
       console.error("Signup error response:", err.response);
