@@ -57,6 +57,8 @@ exports.deleteIncome = async (req, res) => {
 // Download Excel
 exports.downloadIncomeExcel = async (req, res) => {
   const userId = req.user.id;
+  const path = require('path');
+  const fs = require('fs');
 
   try {
     // 1. Get all income records for the user
@@ -74,16 +76,28 @@ exports.downloadIncomeExcel = async (req, res) => {
     const ws = xlsx.utils.json_to_sheet(data);
     xlsx.utils.book_append_sheet(wb, ws, "Income");
 
-    // 4. Define file path to save temporarily
-   
-    xlsx.writeFile(wb, 'income_details.xlsx');
+    // ✅ 4. Define full file path to save temporarily
+    const filePath = path.join(__dirname, '../temp/income_details.xlsx');
 
-    // 5. Send the file for download
-    res.download(filePath, 'income_details.xlsx');
+    // ✅ Ensure the folder exists
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+
+    // 5. Save the Excel file to disk
+    xlsx.writeFile(wb, filePath);
+
+    // ✅ 6. Send file to user for download
+    res.download(filePath, 'income_details.xlsx', (err) => {
+      if (err) {
+        console.error("Download error:", err);
+        res.status(500).send("Error downloading file");
+      } else {
+        // ✅ Optional: Delete the file after sending
+        fs.unlink(filePath, () => {});
+      }
+    });
 
   } catch (error) {
-    
+    console.error("Server Error:", error);
     res.status(500).json({ message: "Server Error" });
   }
 };
-
