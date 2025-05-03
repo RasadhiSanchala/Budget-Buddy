@@ -42,8 +42,10 @@ const IncomeBarChart = () => {
   }, []);
 
   return (
-    <div className="mt-10 p-5 bg-white rounded-xl shadow">
-    <h3 className="mb-5 text-blue-600 text-lg font-semibold">Income in Last 7 Days</h3>
+    
+    <div className="p-4 relative ml-[250px] overflow-y-auto flex-1">
+        <h3 className="text-2xl font-bold mb-6 text-[#2D02AF]">Income in Last 7 Days</h3>
+        <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6 relative">
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={chartData}>
         <CartesianGrid strokeDasharray="3 3" />
@@ -53,6 +55,7 @@ const IncomeBarChart = () => {
         <Bar dataKey="amount" fill="#3B82F6" radius={[10, 10, 0, 0]} /> {/* Tailwind blue-500 */}
       </BarChart>
     </ResponsiveContainer>
+    </div>
   </div>
   
   );
