@@ -33,7 +33,7 @@ const AddIncomeModal = ({ onClose, onIncomeAdded }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
-      <div className="bg-white p-12 rounded-lg w-96 relative">
+      <div className="bg-white p-12 rounded-lg w-96 relative z-50">
         <h2 className="text-xl font-semibold mb-4">Add Income</h2>
         <form onSubmit={handleSubmit}>
 
