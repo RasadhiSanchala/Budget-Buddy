@@ -16,10 +16,9 @@ const Income = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar only */}
-      <div className="">
+      <div className="fixed top-0 left-0 h-screen w-[250px] z-50">
         <DashboardLayout activeMenu="Dashboard" />
       </div>
-
       {/* Main content: Add Income Button + Income List */}
       <div className="flex-1 p-8 relative">
         {/* Button */}
@@ -30,6 +29,10 @@ const Income = () => {
           >
             + Add Income
           </button>
+        </div>
+
+        <div>
+          <IncomeBarChart />
         </div>
 
         {/* Income List */}
@@ -46,10 +49,6 @@ const Income = () => {
             onIncomeAdded={handleAddIncome}
           />
         )}
-
-        <div className="mt-10 p-6 bg-white shadow-md rounded-lg">
-          <IncomeBarChart />
-        </div>
 
       </div>
     </div>
