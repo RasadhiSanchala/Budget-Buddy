@@ -59,7 +59,7 @@ const IncomePage = ({ incomes, setIncomes }) => {
   };
 
   return (
-    <div className="p-4 relative">
+    <div className="p-4 relative ml-[250px] overflow-y-auto flex-1">
       <h2 className="text-2xl font-bold mb-6 text-[#2D02AF]">Income List</h2>
 
       {incomes.length === 0 ? (
@@ -67,13 +67,15 @@ const IncomePage = ({ incomes, setIncomes }) => {
       ) : (
         <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6 relative">
           {/* Download Button (Top-right) */}
-          <button
-            onClick={handleDownloadExcel}
-            className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded flex items-center gap-2 shadow"
-          >
-            <FaDownload className="text-white" />
-            Download
-          </button>
+          <div className="flex justify-end my-4">
+            <button
+              onClick={handleDownloadExcel}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-3 rounded flex items-center gap-2 shadow"
+            >
+              <FaDownload className="text-white" />
+              Download
+            </button>
+          </div>
 
           <h3 className="text-lg font-semibold text-[#2D02AF] mb-4">All Incomes</h3>
 
@@ -108,7 +110,7 @@ const IncomePage = ({ incomes, setIncomes }) => {
                   </div>
                   <button
                     onClick={() => openModal(income._id)}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-500 hover:text-red-700"
                   >
                     <FaTrash />
                   </button>
