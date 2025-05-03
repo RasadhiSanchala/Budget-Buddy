@@ -42,18 +42,19 @@ const IncomeBarChart = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: '40px', padding: '20px', background: '#fdfdfd', borderRadius: '10px' }}>
-      <h3 style={{ marginBottom: '20px', color: '#4CAF50' }}>Income in Last 7 Days</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="amount" fill="#4CAF50" radius={[10, 10, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <div className="mt-10 p-5 bg-white rounded-xl shadow">
+    <h3 className="mb-5 text-blue-600 text-lg font-semibold">Income in Last 7 Days</h3>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={chartData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip />
+        <Bar dataKey="amount" fill="#3B82F6" radius={[10, 10, 0, 0]} /> {/* Tailwind blue-500 */}
+      </BarChart>
+    </ResponsiveContainer>
+  </div>
+  
   );
 };
 
