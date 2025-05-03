@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import AddIncomeModal from "../../components/Income/AddIncomeModal";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import IncomePage from "../../components/Income/IncomePage";
+import IncomeBarChart from '../../components/Income/IncomeBarChart';
+
 
 const Income = () => {
   const [showModal, setShowModal] = useState(false);
@@ -44,6 +46,11 @@ const Income = () => {
             onIncomeAdded={handleAddIncome}
           />
         )}
+
+        <div className="mt-10 p-6 bg-white shadow-md rounded-lg">
+          <IncomeBarChart />
+        </div>
+
       </div>
     </div>
   );
