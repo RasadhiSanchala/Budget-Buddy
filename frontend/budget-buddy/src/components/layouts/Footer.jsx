@@ -8,19 +8,19 @@ function Footer() {
 
         {/* Left: Website Info */}
         <div className="text-center md:text-left">
-          <h2 className="text-lg font-semibold tracking-wide">Budget Buddy</h2>
-          <p className="text-sm text-gray-300">Created by Rasadhi Sanchala</p>
+          <h2 className="text-2xl font-semibold tracking-wide">Budget Buddy</h2>
+          <p className="text-lg text-gray-300 mt-3">Created by Rasadhi Sanchala</p>
         </div>
 
         {/* Center: Quick Navigation */}
-        <div className="flex space-x-6">
-          <Link to="/Income" className="text-sm hover:text-purple-400 transition">Income</Link>
-          <Link to="/Expense" className="text-sm hover:text-purple-400 transition">Expense</Link>
-          <Link to="/Login" className="text-sm hover:text-purple-400 transition">Logout</Link>
+        <div className="flex space-x-6 mr-10">
+          <Link to="/Income" className="text-lg hover:text-purple-400 transition">Income</Link>
+          <Link to="/Expense" className="text-lg hover:text-purple-400 transition">Expense</Link>
+          <Link to="/Login" className="text-lg hover:text-purple-400 transition">Logout</Link>
         </div>
 
         {/* Right: Copyright */}
-        <div className="text-sm text-gray-400 text-center md:text-right">
+        <div className="ml-10 text-base text-gray-400 text-right">
           &copy; {new Date().getFullYear()} All rights reserved.
         </div>
 
