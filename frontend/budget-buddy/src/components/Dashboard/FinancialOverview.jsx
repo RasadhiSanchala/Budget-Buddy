@@ -72,34 +72,34 @@ const FinancialOverview = () => {
     if (error) return <p className="text-center text-red-600 mt-4">{error}</p>;
 
     return (
-        <div className="bg-white shadow p-6 rounded-xl mt-20 mx-4 max-w-xl w-full">
-  <h2 className="text-3xl font-semibold mb-6 text-gray-800">Financial Overview</h2>
-
-  <div className="flex justify-center">
-    {/* Enlarged chart container */}
-    <div className="w-full max-w-5xl h-[500px]"> {/* Wider and taller */}
-      <Pie data={chartData} options={chartOptions} />
-    </div>
-  </div>
-
-  <div className="mt-8 space-y-5 text-xl">
-    <div className="text-gray-700 flex justify-between">
-      <span>Total Income:</span>
-      <span className="font-bold text-green-600">LKR {financialData.totalIncome}</span>
-    </div>
-
-    <div className="text-gray-700 flex justify-between">
-      <span>Total Expense:</span>
-      <span className="font-bold text-red-600">LKR {financialData.totalExpense}</span>
-    </div>
-
-    <div className="text-gray-700 flex justify-between">
-      <span>Balance:</span>
-      <span className="font-bold text-blue-600">LKR {financialData.balance}</span>
-    </div>
-  </div>
-</div>
-
+        <div className="bg-white shadow p-4 rounded-xl mt-20 mx-4 max-w-lg w-full">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Financial Overview</h2>
+      
+        <div className="flex justify-center">
+          {/* Smaller chart container */}
+          <div className="w-full max-w-xs h-[300px]">
+            <Pie data={chartData} options={chartOptions} />
+          </div>
+        </div>
+      
+        <div className="mt-6 space-y-4 text-base">
+          <div className="text-gray-700 flex justify-between">
+            <span>Total Income:</span>
+            <span className="font-bold text-green-600">LKR {financialData.totalIncome}</span>
+          </div>
+      
+          <div className="text-gray-700 flex justify-between">
+            <span>Total Expense:</span>
+            <span className="font-bold text-red-600">LKR {financialData.totalExpense}</span>
+          </div>
+      
+          <div className="text-gray-700 flex justify-between">
+            <span>Balance:</span>
+            <span className="font-bold text-blue-600">LKR {financialData.balance}</span>
+          </div>
+        </div>
+      </div>
+      
     );
 };
 
