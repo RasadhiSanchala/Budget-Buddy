@@ -47,7 +47,7 @@ const SummaryCards = () => {
         >
           <CircleDollarSign className="w-16 h-16 text-blue-700 mx-auto" />
           <h2 className="text-gray-700 text-xl mt-8">Total Balance</h2>
-          <p className="text-2xl font-bold text-blue-700">LKR {summary.totalBalance}</p>
+          <p className="text-xl font-bold text-blue-700">LKR {summary.totalBalance}</p>
         </motion.div>
 
         <motion.div
@@ -58,7 +58,7 @@ const SummaryCards = () => {
         >
           <ArrowDownCircle className="w-16 h-16 text-green-600 mx-auto" />
           <h3 className="text-gray-700 text-2xl mt-8">Total Income</h3>
-          <p className="text-2xl font-bold text-green-600">LKR {summary.totalIncome}</p>
+          <p className="text-xl font-bold text-green-600">LKR {summary.totalIncome}</p>
         </motion.div>
 
         <motion.div
@@ -69,7 +69,7 @@ const SummaryCards = () => {
         >
           <ArrowUpCircle className="w-16 h-16 text-red-600 mx-auto" />
           <h3 className="text-gray-700 text-2xl mt-8">Total Expenses</h3>
-          <p className="text-2xl font-bold text-red-600">LKR {summary.totalExpenses}</p>
+          <p className="text-xl font-bold text-red-600">LKR {summary.totalExpenses}</p>
         </motion.div>
       </div>
     </div>
