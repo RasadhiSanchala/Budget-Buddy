@@ -1,9 +1,9 @@
 import React, { createContext, useState } from 'react';
 
-// Create the context
+
 export const UserContext = createContext();
 
-// Create the provider component
+
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('user');
