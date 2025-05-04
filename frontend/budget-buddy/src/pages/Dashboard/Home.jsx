@@ -1,6 +1,8 @@
 import React from 'react';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import SummaryCards from '../../components/Dashboard/SummaryCards';
+import RecentTransactions from '../../components/Dashboard/RecentTransactions';
+import FinancialOverview from '../../components/Dashboard/FinancialOverview';
 
 function Home() {
   return (
@@ -12,7 +14,14 @@ function Home() {
 
     <div className="p-12 ">
         <SummaryCards/>
+        <div className="">
+        <RecentTransactions/>
       </div>
+      </div>
+
+    <div>
+      <FinancialOverview/>
+    </div>
 
     </div>
 
