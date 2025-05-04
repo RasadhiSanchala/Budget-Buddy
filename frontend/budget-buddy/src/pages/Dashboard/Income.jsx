@@ -3,7 +3,7 @@ import AddIncomeModal from "../../components/Income/AddIncomeModal";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import IncomePage from "../../components/Income/IncomePage";
 import IncomeBarChart from '../../components/Income/IncomeBarChart';
-
+import Footer from '../../components/layouts/Footer'; // ✅ Footer import
 
 const Income = () => {
   const [showModal, setShowModal] = useState(false);
@@ -20,9 +20,8 @@ const Income = () => {
         <DashboardLayout activeMenu="Income" />
       </div>
 
-      
-      {/* Main content: Add Income Button + Income List */}
-      <div className="flex-1 p-8 relative">
+      {/* Main content: Add Income Button + Income List + Footer */}
+      <div className="flex-1 p-8 relative ">
         {/* Button */}
         <div className="flex justify-end mb-4">
           <button
@@ -33,6 +32,7 @@ const Income = () => {
           </button>
         </div>
 
+        {/* Chart */}
         <div>
           <IncomeBarChart />
         </div>
@@ -52,13 +52,12 @@ const Income = () => {
           />
         )}
 
-
+        {/* ✅ Footer (added without changing existing styles) */}
+        <div className="mt-10">
+          <Footer />
+        </div>
       </div>
-
-
     </div>
-
-
   );
 };
 
