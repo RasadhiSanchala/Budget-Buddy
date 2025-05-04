@@ -28,7 +28,8 @@ const RecentTransactions = () => {
     if (error) return <p className="text-center text-red-600 mt-4">{error}</p>;
 
     return (
-        <div className="bg-white shadow p-6 rounded-xl mt-10 mx-4 max-w-4xl w-full">
+        <div className="bg-white shadow p-6 rounded-xl mt-20 mx-4 max-w-7xl w-full h-[500px]">
+
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">Recent Transactions</h2>
             <div className="overflow-y-auto max-h-80 pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 space-y-5">
                 {transactions.map((tx, index) => (
