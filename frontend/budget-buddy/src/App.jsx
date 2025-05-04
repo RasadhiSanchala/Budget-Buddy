@@ -16,6 +16,7 @@ import UserProvider from "./context/userContext";
 
 
 
+
 const App = () => {
   return (
     <UserProvider>
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/Expense" exact element={<Expense />} />
             <Route path="/Home" exact element={<Home />} />
             <Route path="/Income" exact element={<Income />} />
+        
           </Routes>
         </Router>
       </div>
