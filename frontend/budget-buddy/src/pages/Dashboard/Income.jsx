@@ -17,8 +17,10 @@ const Income = () => {
     <div className="flex min-h-screen">
       {/* Sidebar only */}
       <div className="fixed top-0 left-0 h-screen w-[250px] z-50">
-        <DashboardLayout activeMenu="Dashboard" />
+        <DashboardLayout activeMenu="Income" />
       </div>
+
+      
       {/* Main content: Add Income Button + Income List */}
       <div className="flex-1 p-8 relative">
         {/* Button */}
@@ -50,8 +52,13 @@ const Income = () => {
           />
         )}
 
+
       </div>
+
+
     </div>
+
+
   );
 };
 
