@@ -15,8 +15,8 @@ const Expense = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar only */}
-      <div className="fixed top-0 left-0 h-screen w-[250px] z-50">
-        <DashboardLayout activeMenu="Dashboard" />
+      <div className="fixed top-0 left-0 h-screen w-[280px] z-50">
+        <DashboardLayout activeMenu="Expense" />
       </div>
       
       {/* Main content: Add Expense Button + Expense List */}
@@ -25,7 +25,7 @@ const Expense = () => {
         <div className="flex justify-end mb-4">
           <button
             onClick={() => setShowModal(true)}
-            className="bg-[#2D02AF] text-white px-4 py-4 rounded shadow-md"
+            className="bg-[#921b1b] text-white px-4 py-4 rounded shadow-md"
           >
             + Add Expense
           </button>
