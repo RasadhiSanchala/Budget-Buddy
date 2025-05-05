@@ -16,7 +16,7 @@ const Expense = () => {
   return (
     <div className="flex min-h-screen">
      
-      <div className="fixed top-0 left-0 h-screen z-50 w-[250px]">
+      <div className="fixed top-0 left-0 h-screen z-50 w-[280px]">
         <DashboardLayout activeMenu="Expense" />
       </div>
 
