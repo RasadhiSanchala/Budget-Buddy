@@ -39,17 +39,21 @@
 ### 1. Clone the Repository
 
 ```https://github.com/RasadhiSanchala/Budget-Buddy.git```
+
 ```cd Budget-Buddy```
 
 ### 2. Setup the Backend
 
 ``` cd backend```
+
 ```npm install```
 
  #### 2.1 Create a .env file inside the server directory:
 
 ```PORT=8000```
+
 ```MONGO_URI=mongodb+srv://sanchala1017:OuJwCCTvT3wEg8Ar@budgetbuddyrs.zn7iupo.mongodb.net/?retryWrites=true&w=majority&appName=BudgetBuddyRS```
+
 ```JWT_SECRET=5c1e2ac41ad869dbba23a14304f9558ec6ba618397e1256dc6fa39b701050653ac1462b2410c3979e3aca484ddb674cb1259f325ad4b7c0ee04f124bf0b45417```
 
  #### 2.3 Start the backend server:
@@ -59,10 +63,13 @@
 ### 3.Setup the Frontend
 
 ```cd frontend```
+
 ```cd budget-buddy```
+
 ```npm install```
 
 #### 3.1 Start the frontend development server:
+
 ```npm run dev```
 
 ## 🌐 Deployment
