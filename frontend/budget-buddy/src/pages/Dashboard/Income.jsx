@@ -16,7 +16,7 @@ const Income = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar only */}
-      <div className="fixed top-0 left-0 h-screen w-[250px] z-50">
+      <div className="fixed top-0 left-0 h-screen w-[280px] z-50">
         <DashboardLayout activeMenu="Income" />
       </div>
 
