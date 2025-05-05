@@ -51,7 +51,7 @@ const ExpenseBarChart = () => {
 
   return (
     <div className="p-4 relative ml-[250px] overflow-y-auto flex-1">
-      <h3 className="text-2xl font-bold mb-6 text-[#2D02AF]">Expenses in Last 7 Days</h3>
+      <h3 className="text-2xl font-bold mb-6 text-[#AF0202] ">Expenses in Last 7 Days</h3>
       <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6 relative">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
