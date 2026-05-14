@@ -1,8 +1,7 @@
 const express = require("express");
 const { registerUser, loginUser, getUserInfo } = require("../controllers/authController");
 const { protect } = require("../middleware/authMiddleware");
-const upload = require("../middleware/uploadMiddleware"); // 🛑 You forgot to import upload!
-
+const upload = require("../middleware/uploadMiddleware"); 
 const router = express.Router();
 
 // Route to register a new user

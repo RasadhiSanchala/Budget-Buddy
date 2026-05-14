@@ -59,7 +59,7 @@ const SummaryCards = () => {
           <ArrowDownCircle className="w-16 h-16 text-green-600 mx-auto" />
           <h3 className="text-gray-700 text-2xl mt-8">Total Income</h3>
           <p className="text-xl font-bold text-green-600">LKR {summary.totalIncome}</p>
-        </motion.div>
+          </motion.div>
 
         <motion.div
           className={cardStyle}
