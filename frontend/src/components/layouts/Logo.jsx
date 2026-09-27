@@ -1,8 +1,12 @@
 import React from 'react';
 import logo from '../../assets/images/logo.png';
 
-const Logo = () => (
-  <img src={logo} alt="Logo" className="w-[150px] mb-20" />
+const Logo = ({ className = '' }) => (
+  <img
+    src={logo}
+    alt="Budget Buddy"
+    className={`w-[135px] sm:w-[145px] h-auto object-contain ${className}`}
+  />
 );
 
 export default Logo;

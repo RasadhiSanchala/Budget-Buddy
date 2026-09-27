@@ -13,8 +13,8 @@ const SummaryCards = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const cardStyle = "bg-white shadow-lg p-6 rounded-xl w-full max-w-xs h-48 w-64 text-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-300";
-
+  const cardStyle =
+    'bg-white shadow-lg p-5 xl:p-6 rounded-2xl min-h-[180px] text-center cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center min-w-0';
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -37,17 +37,19 @@ const SummaryCards = () => {
   if (error) return <p className="text-center text-red-600 mt-4">{error}</p>;
 
   return (
-    <div className="w-full px-8 mt-8 flex justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl w-full">
+    <div className="w-full min-w-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-7 w-full min-w-0">
         <motion.div
           className={cardStyle}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <CircleDollarSign className="w-16 h-16 text-blue-700 mx-auto" />
-          <h2 className="text-gray-700 text-xl mt-8">Total Balance</h2>
-          <p className="text-xl font-bold text-blue-700">LKR {summary.totalBalance}</p>
+          <CircleDollarSign className="w-14 h-14 xl:w-16 xl:h-16 text-blue-700" />
+          <h2 className="text-gray-700 text-lg xl:text-xl mt-5">Total Balance</h2>
+          <p className="text-lg xl:text-xl font-bold text-blue-700 break-words">
+            LKR {summary.totalBalance}
+          </p>
         </motion.div>
 
         <motion.div
@@ -56,10 +58,12 @@ const SummaryCards = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <ArrowDownCircle className="w-16 h-16 text-green-600 mx-auto" />
-          <h3 className="text-gray-700 text-2xl mt-8">Total Income</h3>
-          <p className="text-xl font-bold text-green-600">LKR {summary.totalIncome}</p>
-          </motion.div>
+          <ArrowDownCircle className="w-14 h-14 xl:w-16 xl:h-16 text-green-600" />
+          <h3 className="text-gray-700 text-lg xl:text-xl mt-5">Total Income</h3>
+          <p className="text-lg xl:text-xl font-bold text-green-600 break-words">
+            LKR {summary.totalIncome}
+          </p>
+        </motion.div>
 
         <motion.div
           className={cardStyle}
@@ -67,9 +71,11 @@ const SummaryCards = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <ArrowUpCircle className="w-16 h-16 text-red-600 mx-auto" />
-          <h3 className="text-gray-700 text-2xl mt-8">Total Expenses</h3>
-          <p className="text-xl font-bold text-red-600">LKR {summary.totalExpenses}</p>
+          <ArrowUpCircle className="w-14 h-14 xl:w-16 xl:h-16 text-red-600" />
+          <h3 className="text-gray-700 text-lg xl:text-xl mt-5">Total Expenses</h3>
+          <p className="text-lg xl:text-xl font-bold text-red-600 break-words">
+            LKR {summary.totalExpenses}
+          </p>
         </motion.div>
       </div>
     </div>

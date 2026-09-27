@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { FaTrash } from "react-icons/fa";
-import { FaDownload } from "react-icons/fa";
+import { FaTrash, FaDownload } from "react-icons/fa";
 
 const ExpensePage = ({ expenses, setExpenses }) => {
   const [showModal, setShowModal] = useState(false);
@@ -17,6 +16,7 @@ const ExpensePage = ({ expenses, setExpenses }) => {
         console.error("Error loading expenses", err);
       }
     };
+
     fetchExpenses();
   }, [setExpenses]);
 
@@ -53,48 +53,52 @@ const ExpensePage = ({ expenses, setExpenses }) => {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Error downloading Excel file:", err);
     }
   };
 
   return (
-    <div className="p-4 relative ml-[250px] overflow-y-auto flex-1">
-      <h2 className="text-2xl font-bold mb-6 text-[#AF0202]">Expense List</h2>
+    <section className="w-full min-w-0">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <h2 className="text-xl xl:text-2xl font-bold text-[#AF0202]">Expense List</h2>
+
+        {expenses.length > 0 && (
+          <button
+            onClick={handleDownloadExcel}
+            className="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-3 rounded-xl flex items-center gap-2 shadow transition"
+          >
+            <FaDownload />
+            Download
+          </button>
+        )}
+      </div>
 
       {expenses.length === 0 ? (
-        <p className="text-gray-500">No expense records yet.</p>
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 text-gray-500">
+          No expense records yet.
+        </div>
       ) : (
-        <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6 relative">
-          {/* Download Button */}
-          <div className="flex justify-end my-4">
-            <button
-              onClick={handleDownloadExcel}
-              className="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-3 rounded flex items-center gap-2 shadow"
-            >
-              <FaDownload className="text-white" />
-              Download
-            </button>
-          </div>
-
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-4 sm:p-5 xl:p-6 min-w-0">
           <h3 className="text-lg font-semibold text-[#AF0202] mb-4">All Expenses</h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-2">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 max-h-[640px] overflow-y-auto pr-1 sm:pr-2">
             {expenses.map((expense) => (
               <div
                 key={expense._id}
-                className="bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition duration-300 p-8 flex items-start justify-between gap-4 relative"
+                className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0"
               >
-                {/* Left - Icon + Info */}
-                <div className="flex gap-4 items-start">
-                  <div className="text-3xl text-[#FF6347]">
+                <div className="flex gap-4 items-center min-w-0">
+                  <div className="text-3xl shrink-0 text-[#FF6347]">
                     {expense.icon ? expense.icon : "💸"}
                   </div>
-                  <div>
-                    <div className="text-lg font-semibold text-[#AF0202]">
+
+                  <div className="min-w-0">
+                    <div className="text-base sm:text-lg font-semibold text-[#AF0202] truncate">
                       {expense.category}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 mt-1">
                       <span className="font-medium text-black">
                         {new Date(expense.date).toLocaleDateString()}
                       </span>
@@ -102,15 +106,16 @@ const ExpensePage = ({ expenses, setExpenses }) => {
                   </div>
                 </div>
 
-                {/* Right - Amount + Delete */}
-                <div className="flex items-center gap-12">
-                  <div className="bg-red-100 text-red-800 px-3 py-3 rounded-lg flex items-center gap-2 font-medium">
+                <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                  <div className="bg-red-100 text-red-800 px-3 py-2 rounded-lg flex items-center gap-2 font-medium whitespace-nowrap">
                     <span>📉</span>
                     Rs {expense.amount}
                   </div>
+
                   <button
                     onClick={() => openModal(expense._id)}
-                    className="text-gray-500 hover:text-red-700"
+                    className="w-9 h-9 flex items-center justify-center rounded-lg text-gray-500 hover:text-red-700 hover:bg-red-50 transition"
+                    aria-label="Delete expense"
                   >
                     <FaTrash />
                   </button>
@@ -121,22 +126,21 @@ const ExpensePage = ({ expenses, setExpenses }) => {
         </div>
       )}
 
-      {/* Confirmation Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center w-[90%] max-w-md">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[1000] p-4 overflow-y-auto">
+          <div className="bg-white p-6 rounded-2xl shadow-lg text-center w-full max-w-md my-auto">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Confirm Deletion</h3>
             <p className="text-gray-600 mb-6">Are you sure you want to delete this expense?</p>
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleConfirmDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
               >
                 Delete
               </button>
               <button
                 onClick={closeModal}
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
               >
                 Cancel
               </button>
@@ -144,7 +148,7 @@ const ExpensePage = ({ expenses, setExpenses }) => {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --font-display: 'Poppins', sans-serif;
   --breakpoint-3xl: 1920px;
@@ -14,9 +13,17 @@
 @layer base {
   html {
     font-family: var(--font-display);
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
   }
 
   body {
+    margin: 0;
     background-color: #fcfbfc;
     overflow-x: hidden;
   }

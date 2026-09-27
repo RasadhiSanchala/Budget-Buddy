@@ -13,43 +13,31 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fdf6f6] via-[#f6f2fc] to-[#ffffff]">
-
-      {/* Sidebar */}
-      <aside className="fixed top-0 left-0 h-screen w-[280px] z-50 bg-white">
+      <aside className="fixed top-0 left-0 h-screen w-[260px] z-50 bg-white">
         <DashboardLayout activeMenu="Dashboard" />
       </aside>
 
+      <main className="ml-[260px] min-h-screen min-w-0 px-5 py-6 lg:px-7 xl:px-8 xl:py-8">
+        <div className="max-w-[1600px] mx-auto min-w-0">
+          <section className="w-full min-w-0">
+            <SummaryCards />
+          </section>
 
-      {/* Main Content */}
-      <main className="ml-[280px] min-h-screen p-6 lg:p-8">
+          <section className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.85fr)] gap-6 xl:gap-8 mt-8 xl:mt-10 items-stretch min-w-0">
+            <div className="min-w-0">
+              <RecentTransactions />
+            </div>
 
-        {/* Summary Cards */}
-        <section className="w-full">
-          <SummaryCards />
-        </section>
+            <div className="min-w-0">
+              <FinancialOverview />
+            </div>
+          </section>
 
-
-        {/* Transactions + Financial Overview */}
-        <section className="grid grid-cols-1 xl:grid-cols-2 gap-8 mt-12">
-
-          <div className="min-w-0">
-            <RecentTransactions />
+          <div className="mt-10">
+            <Footer />
           </div>
-
-          <div className="min-w-0">
-            <FinancialOverview />
-          </div>
-
-        </section>
-
-
-        {/* Footer */}
-        <div className="mt-12">
-          <Footer />
         </div>
-
       </main>
-
     </div>
   );
 }
