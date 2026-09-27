@@ -3,7 +3,7 @@ import bg1 from '../../assets/images/bg1.jpg';
 
 const AuthRightSection = () => {
   return (
-    <div className="w-2/3 bg-gradient-to-tr from-[#FFFFFF] to-[#F4F4FF] h-full relative flex items-center justify-center px-8 overflow-hidden">
+<div className="w-2/3 self-stretch bg-gradient-to-tr from-[#FFFFFF] to-[#F4F4FF] relative flex items-center justify-center px-8 overflow-hidden">
       <div
         className="absolute inset-0 opacity-30 bg-cover bg-center z-0"
         style={{ backgroundImage: `url(${bg1})` }}

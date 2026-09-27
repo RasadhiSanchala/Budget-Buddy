@@ -12,88 +12,134 @@ import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/userContext';
 
 const Login = () => {
- 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const {updateUser} = useContext(UserContext);
+  const { updateUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    console.log("Sending login data:", { email, password }); 
+
+    console.log('Sending login data:', {
+      email,
+      password,
+    });
+
     try {
-      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post(
+        API_PATHS.AUTH.LOGIN,
+        {
+          email,
+          password,
+        }
+      );
 
       const { token, user } = response.data;
 
-      if(token){
+      if (token) {
         localStorage.setItem('token', token);
+
         updateUser({
           name: user.fullName,
           email: user.email,
-          profilePhoto: user.profileImageUrl, // 💥 this is what Sidebar will use
+          profilePhoto: user.profileImageUrl,
         });
+
         navigate('/Home');
       }
-
-     
-
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data.message
+      ) {
         setError(error.response.data.message);
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(
+          'Something went wrong. Please try again.'
+        );
       }
     }
   };
 
   return (
     <>
+      <div className="flex min-h-screen items-stretch relative font-poppins">
 
-      <div className="flex h-screen relative overflow-y-hidden font-poppins">
         {/* Left Section */}
         <div className="w-1/3 bg-[#F4F4FF] px-12 py-8 flex flex-col relative">
+
           <Logo />
+
           <AuthCard>
             <div className="flex flex-col justify-end h-full max-w-xl w-full mx-auto pb-10">
-              <h2 className="text-3xl font-semibold text-black">Welcome back to Budget Buddy.</h2>
-              <p className="text-2xl text-slate-700 mb-6">Please enter your details to log in</p>
 
-              {error && <p className="text-red-500 mb-4">{error}</p>}
+              <h2 className="text-3xl font-semibold text-black">
+                Welcome back to Budget Buddy.
+              </h2>
 
-              <form className="space-y-10 mt-3" onSubmit={handleLogin}>
+              <p className="text-2xl text-slate-700 mb-6">
+                Please enter your details to log in
+              </p>
+
+              {error && (
+                <p className="text-red-500 mb-4">
+                  {error}
+                </p>
+              )}
+
+              <form
+                className="space-y-10 mt-3"
+                onSubmit={handleLogin}
+              >
+
                 <InputField
                   type="email"
                   placeholder="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) =>
+                    setEmail(e.target.value)
+                  }
                 />
+
                 <InputField
                   type="password"
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
                 />
-                <YellowButton text="Login" type="submit" />
+
+                <YellowButton
+                  text="Login"
+                  type="submit"
+                />
+
               </form>
 
               <p className="text-s text-slate-700 mt-8">
                 Don’t have an account?{' '}
-                <Link to="/signup" className="text-[#2D02AF] cursor-pointer hover:underline">Sign up</Link>
+
+                <Link
+                  to="/signup"
+                  className="text-[#2D02AF] cursor-pointer hover:underline"
+                >
+                  Sign up
+                </Link>
               </p>
+
             </div>
           </AuthCard>
+
         </div>
 
         {/* Right Section */}
         <AuthRightSection />
+
       </div>
     </>
   );
