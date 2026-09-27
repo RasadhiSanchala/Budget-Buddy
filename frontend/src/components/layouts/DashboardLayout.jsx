@@ -1,26 +1,12 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../context/userContext";
-
+import React from "react";
 import SideMenu from "./SideMenu";
 
-
-function DashboardLayout({ children, activeMenu }) {
-  const { user } = useContext(UserContext);
-
+function DashboardLayout({ activeMenu }) {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <div className="w-80 hidden md:block">
-        <SideMenu activeMenu={activeMenu} />
-
-
-        <div className="grow p-5">
-          {children}
-        </div>
-      </div>
+    <div className="w-full h-full bg-white">
+      <SideMenu activeMenu={activeMenu} />
     </div>
   );
 }
 
 export default DashboardLayout;
-
-

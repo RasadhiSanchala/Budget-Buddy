@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import SummaryCards from '../../components/Dashboard/SummaryCards';
 import RecentTransactions from '../../components/Dashboard/RecentTransactions';
@@ -11,38 +12,44 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen relative overflow-hidden">
-      {/* Soft charming background */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#fdf6f6] via-[#f6f2fc] to-[#ffffff]"></div>
-
-      {/* Blurred charm blobs */}
-      <div className="absolute top-10 left-20 w-72 h-72 bg-[#921b1b33] rounded-full filter blur-3xl opacity-30 z-0 animate-pulse-slow"></div>
-      <div className="absolute bottom-10 right-20 w-72 h-72 bg-[#6a00ff1f] rounded-full filter blur-3xl opacity-20 z-0 animate-pulse-slow"></div>
+    <div className="min-h-screen bg-gradient-to-br from-[#fdf6f6] via-[#f6f2fc] to-[#ffffff]">
 
       {/* Sidebar */}
-      <div className="fixed top-0 left-0 h-screen w-[280px] z-50">
+      <aside className="fixed top-0 left-0 h-screen w-[280px] z-50 bg-white">
         <DashboardLayout activeMenu="Dashboard" />
-      </div>
+      </aside>
+
 
       {/* Main Content */}
-      <div className="flex-1 ml-[250px] p-8 space-y-12 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-6 w-full">
-          <SummaryCards />
-        </div>
+      <main className="ml-[280px] min-h-screen p-6 lg:p-8">
 
-        <div className="flex flex-col lg:flex-row gap-16 w-full ml-20">
-          <div className="w-full lg:w-1/2">
+        {/* Summary Cards */}
+        <section className="w-full">
+          <SummaryCards />
+        </section>
+
+
+        {/* Transactions + Financial Overview */}
+        <section className="grid grid-cols-1 xl:grid-cols-2 gap-8 mt-12">
+
+          <div className="min-w-0">
             <RecentTransactions />
           </div>
-          <div className="w-full lg:w-1/2">
+
+          <div className="min-w-0">
             <FinancialOverview />
           </div>
-        </div>
 
-        <div>
+        </section>
+
+
+        {/* Footer */}
+        <div className="mt-12">
           <Footer />
         </div>
-      </div>
+
+      </main>
+
     </div>
   );
 }
