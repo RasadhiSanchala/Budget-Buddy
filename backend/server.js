@@ -1,8 +1,10 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
+
 const connectDB = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
@@ -11,7 +13,11 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const app = express();
 
-// Middleware to handle CORS
+
+// ==============================
+// CORS Middleware
+// ==============================
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "*",
@@ -20,9 +26,24 @@ app.use(
   })
 );
 
+
+// ==============================
+// JSON Middleware
+// ==============================
+
 app.use(express.json());
 
+
+// ==============================
+// Connect MongoDB
+// ==============================
+
 connectDB();
+
+
+// ==============================
+// Health / Root Route
+// ==============================
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -31,22 +52,32 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/v1/auth",authRoutes);
+
+// ==============================
+// API Routes
+// ==============================
+
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 
 
-
-//server uploads folder
-app.use("/uploads",express.static(path.join(__dirname,"uploads")));
-
-
+// ==============================
+// Local Server
+// ==============================
 
 const PORT = process.env.PORT || 5000;
 
 if (require.main === module && !process.env.VERCEL) {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
+
+
+// ==============================
+// Export for Vercel
+// ==============================
 
 module.exports = app;
