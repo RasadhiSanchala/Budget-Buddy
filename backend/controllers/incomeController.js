@@ -57,47 +57,43 @@ exports.deleteIncome = async (req, res) => {
 // Download Excel
 exports.downloadIncomeExcel = async (req, res) => {
   const userId = req.user.id;
-  const path = require('path');
-  const fs = require('fs');
 
   try {
-    // 1. Get all income records for the user
     const income = await Income.find({ userId }).sort({ date: -1 });
 
-    // 2. Format the data for Excel
-    const data = income.map(item => ({
+    const data = income.map((item) => ({
       Source: item.source,
       Amount: item.amount,
-      Date: item.date.toISOString().split("T")[0], // clean date format
+      Date: item.date.toISOString().split("T")[0],
     }));
 
-    // 3. Create a workbook and worksheet
     const wb = xlsx.utils.book_new();
     const ws = xlsx.utils.json_to_sheet(data);
+
     xlsx.utils.book_append_sheet(wb, ws, "Income");
 
-    // ✅ 4. Define full file path to save temporarily
-    const filePath = path.join(__dirname, '../temp/income_details.xlsx');
-
-    // ✅ Ensure the folder exists
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-
-    // 5. Save the Excel file to disk
-    xlsx.writeFile(wb, filePath);
-
-    // ✅ 6. Send file to user for download
-    res.download(filePath, 'income_details.xlsx', (err) => {
-      if (err) {
-        console.error("Download error:", err);
-        res.status(500).send("Error downloading file");
-      } else {
-        // ✅ Optional: Delete the file after sending
-        fs.unlink(filePath, () => {});
-      }
+    const buffer = xlsx.write(wb, {
+      type: "buffer",
+      bookType: "xlsx",
     });
 
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="income_details.xlsx"'
+    );
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.send(buffer);
+
   } catch (error) {
-    console.error("Server Error:", error);
-    res.status(500).json({ message: "Server Error" });
+    console.error("Income Excel download error:", error);
+
+    res.status(500).json({
+      message: "Server Error",
+    });
   }
 };

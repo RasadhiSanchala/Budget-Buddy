@@ -58,7 +58,7 @@ exports.downloadExpenseExcel = async (req, res) => {
   try {
     const expenses = await Expense.find({ userId }).sort({ date: -1 });
 
-    const data = expenses.map(item => ({
+    const data = expenses.map((item) => ({
       Category: item.category,
       Amount: item.amount,
       Date: item.date.toISOString().split("T")[0],
@@ -66,14 +66,31 @@ exports.downloadExpenseExcel = async (req, res) => {
 
     const wb = xlsx.utils.book_new();
     const ws = xlsx.utils.json_to_sheet(data);
+
     xlsx.utils.book_append_sheet(wb, ws, "Expense");
 
-    const filePath = "expense_details.xlsx";
-    xlsx.writeFile(wb, filePath);
+    const buffer = xlsx.write(wb, {
+      type: "buffer",
+      bookType: "xlsx",
+    });
 
-    res.download(filePath, "expense_details.xlsx");
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="expense_details.xlsx"'
+    );
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.send(buffer);
 
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    console.error("Expense Excel download error:", error);
+
+    res.status(500).json({
+      message: "Server Error",
+    });
   }
 };

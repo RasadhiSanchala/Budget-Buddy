@@ -1,30 +1,31 @@
-const multer = require('multer');
+const multer = require("multer");
 
-// Configure storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Folder where files will be saved
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname); // Unique filename
-  },
-});
+// Store uploaded file temporarily in memory
+const storage = multer.memoryStorage();
 
-// File filter
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/jpg"
+  ];
+
   if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true); // Accept the file
+    cb(null, true);
   } else {
-    cb(new Error('Only jpeg, jpg, and png formats are allowed'), false); // Reject the file
+    cb(
+      new Error("Only jpeg, jpg, and png formats are allowed"),
+      false
+    );
   }
 };
 
-// Create upload middleware
 const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
+  storage,
+  fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB
+  },
 });
 
-// Export
 module.exports = upload;
