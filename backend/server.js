@@ -24,6 +24,13 @@ app.use(express.json());
 
 connectDB();
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "Budget Buddy API is running",
+  });
+});
+
 app.use("/api/v1/auth",authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
