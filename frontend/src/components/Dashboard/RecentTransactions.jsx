@@ -28,8 +28,8 @@ const RecentTransactions = () => {
   if (error) return <p className="text-center text-red-600 mt-4">{error}</p>;
 
   return (
-    <div className="bg-white shadow rounded-2xl p-5 xl:p-6 w-full h-full min-h-[430px] min-w-0">
-      <h2 className="text-xl xl:text-2xl font-semibold mb-5 text-gray-800">
+    <div className="bg-white shadow rounded-2xl p-4 sm:p-5 xl:p-6 w-full h-full min-h-[360px] sm:min-h-[410px] xl:min-h-[430px] min-w-0">
+      <h2 className="text-lg sm:text-xl xl:text-2xl font-semibold mb-4 sm:mb-5 text-gray-800">
         Recent Transactions
       </h2>
 
@@ -40,7 +40,7 @@ const RecentTransactions = () => {
           transactions.map((tx, index) => (
             <div
               key={index}
-              className={`flex items-center gap-4 border border-gray-200 shadow-sm rounded-xl p-4 transition duration-300 min-w-0 ${
+              className={`flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 border border-gray-200 shadow-sm rounded-xl p-4 transition duration-300 min-w-0 ${
                 tx.type === 'income' ? 'bg-green-50' : 'bg-red-50'
               }`}
             >
@@ -62,7 +62,7 @@ const RecentTransactions = () => {
               </div>
 
               <div
-                className={`text-sm sm:text-base font-bold shrink-0 ${
+                className={`text-sm sm:text-base font-bold sm:shrink-0 self-end sm:self-auto ${
                   tx.type === 'income' ? 'text-green-600' : 'text-red-500'
                 }`}
               >

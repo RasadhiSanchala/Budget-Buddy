@@ -78,12 +78,12 @@ const FinancialOverview = () => {
   if (error) return <p className="text-center text-red-600 mt-4">{error}</p>;
 
   return (
-    <div className="bg-white shadow rounded-2xl p-5 xl:p-6 w-full h-full min-h-[430px] min-w-0">
-      <h2 className="text-xl xl:text-2xl font-semibold mb-4 text-gray-800">
+    <div className="bg-white shadow rounded-2xl p-4 sm:p-5 xl:p-6 w-full h-full min-h-[360px] sm:min-h-[410px] xl:min-h-[430px] min-w-0">
+      <h2 className="text-lg sm:text-xl xl:text-2xl font-semibold mb-4 text-gray-800">
         Financial Overview
       </h2>
 
-      <div className="w-full h-[255px] xl:h-[285px] min-w-0">
+      <div className="w-full h-[220px] sm:h-[250px] xl:h-[285px] min-w-0">
         <Pie data={chartData} options={chartOptions} />
       </div>
 

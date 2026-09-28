@@ -6,7 +6,7 @@ const InputField = ({ type, placeholder, value, onChange }) => (
     placeholder={placeholder}
     value={value}
     onChange={onChange}
-    className="w-full px-6 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#FFC300]"
+    className="w-full px-4 sm:px-5 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC300] bg-white"
   />
 );
 

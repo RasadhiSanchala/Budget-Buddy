@@ -10,12 +10,13 @@ import {
   LogOut,
 } from 'lucide-react';
 
-function SideMenu({ activeMenu }) {
+function SideMenu({ activeMenu, onNavigate }) {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    onNavigate?.();
     navigate('/Login');
   };
 
@@ -26,20 +27,21 @@ function SideMenu({ activeMenu }) {
     <div className="h-screen overflow-y-auto overscroll-contain bg-white px-4 py-5 shadow-md">
       <Logo className="mb-5" />
 
-      <div className="flex flex-col items-center text-center mb-7 mt-2">
+      <div className="flex flex-col items-center text-center mb-7 mt-3 px-1">
         <img
           src={user?.profilePhoto || 'https://via.placeholder.com/100'}
           alt="Profile"
-          className="w-24 h-24 xl:w-28 xl:h-28 rounded-full mb-4 object-cover border-2 border-gray-300 shadow-sm"
+          className="w-20 h-20 sm:w-24 sm:h-24 xl:w-28 xl:h-28 rounded-full mb-4 object-cover border-2 border-gray-300 shadow-sm"
         />
-        <h2 className="text-lg xl:text-xl font-semibold text-gray-800 leading-snug break-words max-w-full">
+        <h2 className="text-base sm:text-lg xl:text-xl font-semibold text-gray-800 leading-snug break-words max-w-full">
           {user?.name || 'Guest User'}
         </h2>
       </div>
 
-      <nav className="flex flex-col gap-2 pb-6">
+      <nav className="flex flex-col gap-2 pb-8">
         <Link
           to="/Home"
+          onClick={onNavigate}
           className={`${baseLink} ${
             activeMenu === 'Dashboard'
               ? 'bg-purple-100 text-purple-700 font-semibold'
@@ -52,6 +54,7 @@ function SideMenu({ activeMenu }) {
 
         <Link
           to="/Income"
+          onClick={onNavigate}
           className={`${baseLink} ${
             activeMenu === 'Income'
               ? 'bg-purple-100 text-purple-700 font-semibold'
@@ -64,6 +67,7 @@ function SideMenu({ activeMenu }) {
 
         <Link
           to="/Expense"
+          onClick={onNavigate}
           className={`${baseLink} ${
             activeMenu === 'Expense'
               ? 'bg-purple-100 text-purple-700 font-semibold'

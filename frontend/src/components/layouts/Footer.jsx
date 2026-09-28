@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-7 shadow-inner border-t border-gray-700 rounded-2xl overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 flex flex-col lg:flex-row items-center justify-between gap-5">
+    <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-6 sm:py-7 shadow-inner border-t border-gray-700 rounded-2xl overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-5 flex flex-col lg:flex-row items-center justify-between gap-5">
         <div className="text-center lg:text-left">
           <h2 className="text-xl sm:text-2xl font-semibold tracking-wide">Budget Buddy</h2>
           <p className="text-sm sm:text-base text-gray-300 mt-2">Created by Rasadhi Sanchala</p>

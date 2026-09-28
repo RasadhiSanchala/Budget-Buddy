@@ -49,16 +49,16 @@ const IncomeBarChart = () => {
 
   return (
     <section className="w-full min-w-0">
-      <h3 className="text-xl xl:text-2xl font-bold mb-4 text-[#2D02AF]">
+      <h3 className="text-lg sm:text-xl xl:text-2xl font-bold mb-4 text-[#2D02AF]">
         Income in Last 7 Days
       </h3>
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-4 sm:p-5 xl:p-6 min-w-0">
-        <div className="w-full h-[300px] sm:h-[330px] min-w-0">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-3 sm:p-5 xl:p-6 min-w-0">
+        <div className="w-full h-[240px] sm:h-[310px] xl:h-[330px] min-w-0">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tick={{ fontSize: 11 }} minTickGap={8} />
-              <YAxis tick={{ fontSize: 11 }} width={55} />
+              <XAxis dataKey="date" tick={{ fontSize: 10 }} minTickGap={6} tickFormatter={(value) => value.slice(5)} />
+              <YAxis tick={{ fontSize: 10 }} width={48} />
               <Tooltip />
               <Bar dataKey="amount" fill="#3B82F6" radius={[10, 10, 0, 0]} />
             </BarChart>
