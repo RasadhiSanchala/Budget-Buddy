@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Camera, Trash2 } from 'lucide-react';
 
 const MAX_DIMENSION = 1200;
 const TARGET_MAX_BYTES = 2 * 1024 * 1024;
@@ -119,7 +120,7 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2.5">
       <input
         type="file"
         accept="image/jpeg,image/png,image/webp"
@@ -131,37 +132,42 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
       <button
         type="button"
         onClick={onChooseFile}
-        className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full cursor-pointer group focus:outline-none focus:ring-2 focus:ring-[#FFC300] focus:ring-offset-2"
+        className="group relative flex h-24 w-24 items-center justify-center rounded-[26px] border border-slate-200 bg-slate-50 shadow-sm outline-none transition hover:-translate-y-0.5 hover:border-[#6D55E8]/30 hover:shadow-md focus:ring-4 focus:ring-[#6D55E8]/10 sm:h-28 sm:w-28"
         aria-label="Choose profile photo"
       >
         {previewUrl ? (
           <>
-            <span className="block w-full h-full rounded-full overflow-hidden border-4 border-white shadow-md">
+            <span className="block h-full w-full overflow-hidden rounded-[25px]">
               <img
                 src={previewUrl}
                 alt="Profile preview"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
             </span>
             <span
               onClick={handleRemoveImage}
-              className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white border-2 border-red-500 text-red-500 rounded-full w-7 h-7 flex items-center justify-center text-xs shadow hover:bg-red-500 hover:text-white transition z-10"
+              className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-white bg-rose-500 text-white shadow-lg transition hover:bg-rose-600"
               title="Delete Profile Picture"
             >
-              🗑️
+              <Trash2 size={14} />
             </span>
           </>
         ) : (
-          <span className="flex w-full h-full rounded-full border-2 border-dashed border-slate-400 bg-[#F4F4FF] items-center justify-center text-[#2D02AF] text-xs sm:text-sm text-center px-2">
-            {processing ? 'Processing…' : 'Upload profile photo'}
+          <span className="flex flex-col items-center gap-2 text-slate-500">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#6D55E8]/10 text-[#6D55E8] transition group-hover:bg-[#6D55E8] group-hover:text-white">
+              <Camera size={20} />
+            </span>
+            <span className="px-2 text-center text-[11px] font-semibold">
+              {processing ? 'Processing…' : 'Add photo'}
+            </span>
           </span>
         )}
       </button>
 
-      <p className="text-xs text-gray-500">JPG, PNG or WEBP · automatically optimized</p>
+      <p className="text-[11px] text-slate-400">JPG, PNG or WEBP · optimized automatically</p>
 
       {imageError && (
-        <p className="text-xs text-red-500 text-center max-w-xs">{imageError}</p>
+        <p className="max-w-xs text-center text-xs text-rose-500">{imageError}</p>
       )}
     </div>
   );

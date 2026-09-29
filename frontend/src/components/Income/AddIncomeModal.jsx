@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from '../../utils/apiPaths';
 import EmojiPicker from "emoji-picker-react";
+import { CalendarDays, CircleDollarSign, SmilePlus, Wallet, X } from 'lucide-react';
 
 const AddIncomeModal = ({ onClose, onIncomeAdded }) => {
   const [formData, setFormData] = useState({
@@ -32,67 +33,101 @@ const AddIncomeModal = ({ onClose, onIncomeAdded }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-[1000] p-4 overflow-y-auto">
-      <div className="bg-white/90 backdrop-blur-xl border border-white/30 shadow-2xl p-6 sm:p-8 rounded-2xl w-full max-w-md relative my-auto max-h-[92vh] overflow-y-auto">
-        <div className="mb-6 text-center">
-          <div className="text-4xl mb-2 animate-bounce">{formData.icon || "💸"}</div>
-          <h2 className="text-2xl font-bold text-gray-800">Add New Income</h2>
-          <p className="text-sm text-gray-500">Track your earnings smarter 💡</p>
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-[#0C0A22]/70 p-4 backdrop-blur-sm">
+      <div className="app-scrollbar relative my-auto max-h-[92vh] w-full max-w-[520px] overflow-y-auto rounded-[30px] border border-white/10 bg-white p-6 shadow-[0_35px_100px_rgba(0,0,0,0.32)] sm:p-8">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200"
+          aria-label="Close add income dialog"
+        >
+          <X size={18} />
+        </button>
+
+        <div className="pr-10">
+          <p className="text-[11px] font-bold tracking-[0.14em] text-emerald-600 uppercase">New transaction</p>
+          <h2 className="mt-1 text-2xl font-extrabold tracking-[-0.035em] text-[#171335]">Add income</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-500">Record a new source of earnings in your account.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="mt-7 space-y-5">
           <div className="relative">
-            <label className="block text-sm text-gray-600 mb-1">Pick an Icon</label>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">Transaction icon</label>
             <button
               type="button"
               onClick={() => setShowPicker(!showPicker)}
-              className="text-3xl bg-white shadow-inner border border-gray-300 w-full py-2 rounded-md hover:ring-2 hover:ring-indigo-300 transition"
+              className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-left transition hover:border-emerald-200 hover:bg-white"
             >
-              {formData.icon || "😊"}
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-xl">
+                {formData.icon || "💰"}
+              </span>
+              <span className="flex-1">
+                <span className="block text-sm font-semibold text-slate-700">Choose an emoji</span>
+                <span className="block text-xs text-slate-400">Make this income easy to recognize</span>
+              </span>
+              <SmilePlus size={18} className="text-slate-400" />
             </button>
             {showPicker && (
-              <div className="absolute z-50 mt-2 left-1/2 -translate-x-1/2 max-w-[calc(100vw-3rem)]">
+              <div className="absolute left-1/2 z-50 mt-2 max-w-[calc(100vw-3rem)] -translate-x-1/2 overflow-hidden rounded-2xl shadow-2xl">
                 <EmojiPicker onEmojiClick={handleEmojiClick} />
               </div>
             )}
           </div>
 
-          <input
-            type="text"
-            placeholder="Income Source"
-            value={formData.source}
-            onChange={(e) => setFormData({ ...formData, source: e.target.value })}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-          />
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-slate-700">Income source</span>
+            <div className="relative">
+              <Wallet className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="text"
+                placeholder="Salary, Freelance, Bonus..."
+                value={formData.source}
+                onChange={(e) => setFormData({ ...formData, source: e.target.value })}
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-400 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
+              />
+            </div>
+          </label>
 
-          <input
-            type="number"
-            placeholder="Amount"
-            value={formData.amount}
-            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition"
-          />
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-slate-700">Amount</span>
+            <div className="relative">
+              <CircleDollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="number"
+                placeholder="0.00"
+                value={formData.amount}
+                onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-400 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
+              />
+            </div>
+          </label>
 
-          <input
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
-          />
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-slate-700">Date</span>
+            <div className="relative">
+              <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-3.5 pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-emerald-400 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
+              />
+            </div>
+          </label>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+              className="rounded-2xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition"
+              className="rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_24px_rgba(16,185,129,0.22)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
             >
-              Add Income
+              Add income
             </button>
           </div>
         </form>

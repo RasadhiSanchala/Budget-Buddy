@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, LockKeyhole, Mail, UserRound, X } from 'lucide-react';
 
 import Logo from '../../components/layouts/Logo';
-import InputField from '../../components/layouts/InputField';
-import YellowButton from '../../components/layouts/YellowButton';
 import AuthCard from '../../components/layouts/AuthCard';
 import AuthRightSection from '../../components/layouts/AuthRightSection';
 import ProfilePhotoSelector from '../../components/layouts/ProfilePhotoSelector';
@@ -78,70 +77,129 @@ const SignUp = () => {
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 overflow-y-auto">
-          <AuthCard className="my-auto">
-            <h2 className="text-2xl font-bold mb-4 text-[#2D02AF]">
-              Welcome to Budget Buddy 💰
-            </h2>
-            <p className="mb-6 text-base sm:text-lg text-gray-700">
-              Are you ready to sign up and start managing your budget?
-            </p>
-            <YellowButton text="Yes, I'm Ready" onClick={() => setShowModal(false)} />
-          </AuthCard>
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-[#0C0A22]/70 p-4 backdrop-blur-md">
+          <div className="relative w-full max-w-md overflow-hidden rounded-[30px] border border-white/10 bg-white p-7 shadow-[0_35px_100px_rgba(0,0,0,0.35)] sm:p-8">
+            <div className="absolute -right-14 -top-14 h-36 w-36 rounded-full bg-[#765EF1]/15" />
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200"
+              aria-label="Close welcome dialog"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="relative">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#171335] text-2xl shadow-lg">
+                💸
+              </div>
+              <p className="text-xs font-bold tracking-[0.14em] text-[#6D55E8] uppercase">Start your journey</p>
+              <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-[#171335] sm:text-3xl">
+                Build better money habits with Budget Buddy.
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-slate-500">
+                Create your account, record income and expenses, and get a clear overview of your finances.
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="mt-7 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#171335] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#211b4f]"
+              >
+                Create my account
+                <ArrowRight size={17} />
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
-      <div className="min-h-screen lg:flex items-stretch font-poppins bg-[#F4F4FF]">
-        <div className="w-full lg:w-[38%] xl:w-1/3 min-h-screen bg-[#F4F4FF] px-5 sm:px-8 lg:px-10 xl:px-12 py-6 lg:py-8 flex flex-col">
-          <Logo className="mb-6 lg:mb-8" />
+      <div className="min-h-screen bg-[#F5F6FB] lg:flex">
+        <div className="relative flex min-h-screen w-full flex-col px-5 py-6 sm:px-8 lg:w-[44%] lg:max-w-[620px] lg:px-10 xl:px-14">
+          <div className="absolute left-0 top-0 h-60 w-60 rounded-full bg-[#765EF1]/10 blur-3xl" />
 
-          <div className="flex-1 flex items-center justify-center py-3">
+          <div className="relative z-10">
+            <Logo className="w-[148px] sm:w-[160px]" />
+          </div>
+
+          <div className="relative z-10 flex flex-1 items-center justify-center py-8">
             <AuthCard>
-              <div className="w-full mx-auto">
-                <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-black">
-                  Create An Account
+              <div className="mb-6">
+                <p className="mb-3 inline-flex rounded-full bg-[#6D55E8]/10 px-3 py-1.5 text-xs font-bold tracking-[0.12em] text-[#6D55E8] uppercase">
+                  Create account
+                </p>
+                <h2 className="text-3xl font-extrabold tracking-[-0.035em] text-[#171335] sm:text-[36px]">
+                  Start managing smarter
                 </h2>
-                <p className="text-lg sm:text-xl text-slate-700 mt-2 mb-5">
-                  Join us today by entering your details
+                <p className="mt-3 text-sm leading-6 text-slate-500 sm:text-[15px]">
+                  Set up your profile and take the first step toward a clearer financial picture.
                 </p>
+              </div>
 
-                <form className="space-y-4 mt-2" onSubmit={handleSubmit}>
-                  <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+              <form className="space-y-4" onSubmit={handleSubmit}>
+                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-                  <p className="text-sm text-slate-700 mt-3 mb-1">Hi Buddy</p>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-slate-700">Full name</span>
+                  <div className="relative">
+                    <UserRound className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    <input
+                      type="text"
+                      placeholder="Your full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-3.5 pl-11 pr-4 text-[15px] text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-[#6D55E8] focus:bg-white focus:ring-4 focus:ring-[#6D55E8]/10"
+                    />
+                  </div>
+                </label>
 
-                  <InputField
-                    type="text"
-                    placeholder="Full Name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                  />
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-slate-700">Email address</span>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    <input
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-3.5 pl-11 pr-4 text-[15px] text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-[#6D55E8] focus:bg-white focus:ring-4 focus:ring-[#6D55E8]/10"
+                    />
+                  </div>
+                </label>
 
-                  <InputField
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-slate-700">Password</span>
+                  <div className="relative">
+                    <LockKeyhole className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    <input
+                      type="password"
+                      placeholder="Minimum 8 characters"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-3.5 pl-11 pr-4 text-[15px] text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-[#6D55E8] focus:bg-white focus:ring-4 focus:ring-[#6D55E8]/10"
+                    />
+                  </div>
+                </label>
 
-                  <InputField
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                {error && (
+                  <div className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-600">
+                    {error}
+                  </div>
+                )}
 
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
+                <button
+                  type="submit"
+                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#171335] px-5 py-3.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_rgba(23,19,53,0.20)] transition hover:-translate-y-0.5 hover:bg-[#211b4f]"
+                >
+                  Create account
+                  <ArrowRight size={17} />
+                </button>
+              </form>
 
-                  <YellowButton text="Sign Up" type="submit" />
-                </form>
-
-                <p className="text-sm sm:text-base text-slate-700 mt-6">
-                  Already Have an Account?{' '}
-                  <Link to="/login" className="text-[#2D02AF] cursor-pointer hover:underline">
-                    Log in
-                  </Link>
-                </p>
+              <div className="mt-6 border-t border-slate-100 pt-6 text-center text-sm text-slate-500">
+                Already have an account?{' '}
+                <Link to="/login" className="font-bold text-[#6D55E8] transition hover:text-[#4F37C5]">
+                  Sign in
+                </Link>
               </div>
             </AuthCard>
           </div>

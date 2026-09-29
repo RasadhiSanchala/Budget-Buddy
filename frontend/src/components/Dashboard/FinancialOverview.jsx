@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { Pie } from 'react-chartjs-2';
+import { ChartPie } from 'lucide-react';
 import {
   Chart as ChartJS,
   Title,
@@ -48,9 +49,11 @@ const FinancialOverview = () => {
     labels: ['Income', 'Expense', 'Balance'],
     datasets: [
       {
-        data: [financialData.totalIncome, financialData.totalExpense, financialData.balance],
-        backgroundColor: ['#4caf50', '#f44336', '#2196f3'],
-        hoverOffset: 4,
+        data: [financialData.totalIncome, financialData.totalExpense, Math.max(financialData.balance, 0)],
+        backgroundColor: ['#22C55E', '#F43F5E', '#6D55E8'],
+        borderColor: '#ffffff',
+        borderWidth: 5,
+        hoverOffset: 5,
       },
     ],
   };
@@ -58,48 +61,67 @@ const FinancialOverview = () => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    cutout: '68%',
     plugins: {
-      legend: {
-        position: 'top',
-        labels: {
-          boxWidth: 28,
-          font: { size: 11 },
-        },
-      },
+      legend: { display: false },
       tooltip: {
+        backgroundColor: '#171335',
+        titleColor: '#ffffff',
+        bodyColor: '#ffffff',
+        padding: 12,
+        cornerRadius: 12,
         callbacks: {
-          label: (tooltipItem) => `LKR ${tooltipItem.raw}`,
+          label: (tooltipItem) => ` LKR ${Number(tooltipItem.raw || 0).toLocaleString()}`,
         },
       },
     },
   };
 
-  if (loading) return <p className="text-center mt-4">Loading financial overview...</p>;
-  if (error) return <p className="text-center text-red-600 mt-4">{error}</p>;
+  if (loading) return <div className="h-[430px] animate-pulse rounded-[24px] border border-slate-200 bg-white" />;
+  if (error) return <div className="rounded-2xl border border-rose-100 bg-rose-50 p-4 text-sm text-rose-600">{error}</div>;
+
+  const rows = [
+    { label: 'Income', value: financialData.totalIncome, color: 'bg-emerald-500', text: 'text-emerald-600' },
+    { label: 'Expense', value: financialData.totalExpense, color: 'bg-rose-500', text: 'text-rose-600' },
+    { label: 'Balance', value: financialData.balance, color: 'bg-[#6D55E8]', text: 'text-[#6D55E8]' },
+  ];
 
   return (
-    <div className="bg-white shadow rounded-2xl p-4 sm:p-5 xl:p-6 w-full h-full min-h-[360px] sm:min-h-[410px] xl:min-h-[430px] min-w-0">
-      <h2 className="text-lg sm:text-xl xl:text-2xl font-semibold mb-4 text-gray-800">
-        Financial Overview
-      </h2>
-
-      <div className="w-full h-[220px] sm:h-[250px] xl:h-[285px] min-w-0">
-        <Pie data={chartData} options={chartOptions} />
+    <div className="surface-card h-full min-h-[430px] w-full min-w-0 p-5 sm:p-6">
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <div>
+          <p className="text-[11px] font-bold tracking-[0.14em] text-[#6D55E8] uppercase">Distribution</p>
+          <h2 className="mt-1 text-xl font-extrabold tracking-[-0.03em] text-[#171335]">Financial overview</h2>
+        </div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#6D55E8]/10 text-[#6D55E8]">
+          <ChartPie size={19} />
+        </div>
       </div>
 
-      <div className="mt-5 space-y-3 text-sm sm:text-base">
-        <div className="text-gray-700 flex justify-between gap-4">
-          <span>Total Income:</span>
-          <span className="font-bold text-green-600">LKR {financialData.totalIncome}</span>
+      <div className="relative mx-auto h-[225px] w-full max-w-[320px] sm:h-[245px]">
+        <Pie data={chartData} options={chartOptions} />
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-[10px] font-bold tracking-[0.12em] text-slate-400 uppercase">Net balance</p>
+            <p className="mt-1 text-lg font-extrabold tracking-[-0.03em] text-[#171335]">
+              LKR {Number(financialData.balance || 0).toLocaleString()}
+            </p>
+          </div>
         </div>
-        <div className="text-gray-700 flex justify-between gap-4">
-          <span>Total Expense:</span>
-          <span className="font-bold text-red-600">LKR {financialData.totalExpense}</span>
-        </div>
-        <div className="text-gray-700 flex justify-between gap-4">
-          <span>Balance:</span>
-          <span className="font-bold text-blue-600">LKR {financialData.balance}</span>
-        </div>
+      </div>
+
+      <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+        {rows.map((row) => (
+          <div key={row.label} className="rounded-2xl bg-slate-50/80 px-3 py-3">
+            <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-500">
+              <span className={`h-2 w-2 rounded-full ${row.color}`} />
+              {row.label}
+            </div>
+            <p className={`mt-1 truncate text-sm font-extrabold ${row.text}`}>
+              LKR {Number(row.value || 0).toLocaleString()}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

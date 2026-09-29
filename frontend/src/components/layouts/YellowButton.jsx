@@ -5,9 +5,10 @@ const YellowButton = ({ text, onClick, type = 'button', disabled = false }) => (
     type={type}
     onClick={onClick}
     disabled={disabled}
-    className="w-full bg-[#FFC300] text-white font-medium text-base py-3 rounded-lg hover:bg-yellow-500 active:scale-[0.99] transition disabled:opacity-60 disabled:cursor-not-allowed"
+    className="group relative w-full overflow-hidden rounded-2xl bg-[#171335] px-5 py-3.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_rgba(23,19,53,0.20)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#211b4f] hover:shadow-[0_18px_36px_rgba(23,19,53,0.26)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
   >
-    {text}
+    <span className="relative z-10">{text}</span>
+    <span className="absolute inset-y-0 -left-1/3 w-1/3 skew-x-[-20deg] bg-white/15 transition-all duration-700 group-hover:left-[120%]" />
   </button>
 );
 

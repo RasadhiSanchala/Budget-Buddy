@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { FaTrash, FaDownload } from "react-icons/fa";
+import { Download, Trash2, TrendingUp, X } from "lucide-react";
 
 const IncomePage = ({ incomes, setIncomes }) => {
   const [showModal, setShowModal] = useState(false);
@@ -60,89 +60,100 @@ const IncomePage = ({ incomes, setIncomes }) => {
   };
 
   return (
-    <section className="w-full min-w-0">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <h2 className="text-xl xl:text-2xl font-bold text-[#2D02AF]">Income List</h2>
+    <section className="surface-card w-full min-w-0 p-5 sm:p-6">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-[11px] font-bold tracking-[0.14em] text-emerald-600 uppercase">Records</p>
+          <h2 className="mt-1 text-xl font-extrabold tracking-[-0.03em] text-[#171335]">Income history</h2>
+          <p className="mt-1 text-xs text-slate-400">Every income entry saved to your account.</p>
+        </div>
 
         {incomes.length > 0 && (
           <button
             onClick={handleDownloadExcel}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-3 rounded-xl flex items-center gap-2 shadow transition"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 sm:w-auto"
           >
-            <FaDownload />
-            Download
+            <Download size={17} />
+            Export Excel
           </button>
         )}
       </div>
 
       {incomes.length === 0 ? (
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 text-gray-500">
-          No income records yet.
+        <div className="flex min-h-[260px] flex-col items-center justify-center rounded-[22px] border border-dashed border-slate-200 bg-slate-50/70 px-5 text-center">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+            <TrendingUp size={24} />
+          </div>
+          <p className="text-sm font-extrabold text-slate-700">No income records yet</p>
+          <p className="mt-1 max-w-sm text-xs leading-5 text-slate-400">Add your first income record to start building a clear history of your earnings.</p>
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-4 sm:p-5 xl:p-6 min-w-0">
-          <h3 className="text-lg font-semibold text-[#2D02AF] mb-4">All Incomes</h3>
-
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 max-h-[640px] overflow-y-auto pr-1 sm:pr-2">
-            {incomes.map((income) => (
-              <div
-                key={income._id}
-                className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0"
-              >
-                <div className="flex gap-4 items-center min-w-0">
-                  <div className="text-3xl shrink-0 text-[#FFD700]">
-                    {income.icon ? income.icon : "💰"}
-                  </div>
-
-                  <div className="min-w-0">
-                    <div className="text-base sm:text-lg font-semibold text-[#2D02AF] truncate">
-                      {income.source}
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      <span className="font-medium text-black">
-                        {new Date(income.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </div>
+        <div className="app-scrollbar grid max-h-[680px] grid-cols-1 gap-3 overflow-y-auto pr-1 lg:grid-cols-2">
+          {incomes.map((income) => (
+            <article
+              key={income._id}
+              className="group rounded-[22px] border border-slate-200/80 bg-white p-4 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_14px_30px_rgba(16,185,129,0.08)] sm:p-5"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-2xl shadow-sm">
+                  {income.icon ? income.icon : "💰"}
                 </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
-                  <div className="bg-blue-100 text-blue-800 px-3 py-2 rounded-lg flex items-center gap-2 font-medium whitespace-nowrap">
-                    <span>📈</span>
-                    Rs {income.amount}
-                  </div>
-
-                  <button
-                    onClick={() => openModal(income._id)}
-                    className="w-9 h-9 flex items-center justify-center rounded-lg text-gray-500 hover:text-red-700 hover:bg-red-50 transition"
-                    aria-label="Delete income"
-                  >
-                    <FaTrash />
-                  </button>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-extrabold text-[#171335] sm:text-[15px]">{income.source}</p>
+                  <p className="mt-1 text-xs text-slate-400">{new Date(income.date).toLocaleDateString()}</p>
                 </div>
+
+                <button
+                  onClick={() => openModal(income._id)}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+                  aria-label="Delete income"
+                >
+                  <Trash2 size={17} />
+                </button>
               </div>
-            ))}
-          </div>
+
+              <div className="mt-4 flex items-end justify-between gap-3 border-t border-slate-100 pt-4">
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.12em] text-slate-400 uppercase">Amount received</p>
+                  <p className="mt-1 text-lg font-extrabold tracking-[-0.03em] text-emerald-600">
+                    LKR {Number(income.amount || 0).toLocaleString()}
+                  </p>
+                </div>
+                <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700">Income</span>
+              </div>
+            </article>
+          ))}
         </div>
       )}
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[1000] p-4 overflow-y-auto">
-          <div className="bg-white p-6 rounded-2xl shadow-lg text-center w-full max-w-md my-auto">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Confirm Deletion</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to delete this income?</p>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={handleConfirmDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-              >
-                Delete
-              </button>
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-[#0C0A22]/70 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-md rounded-[28px] border border-white/10 bg-white p-6 shadow-[0_35px_100px_rgba(0,0,0,0.30)] sm:p-7">
+            <button
+              onClick={closeModal}
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200"
+              aria-label="Close delete dialog"
+            >
+              <X size={17} />
+            </button>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
+              <Trash2 size={21} />
+            </div>
+            <h3 className="mt-5 text-xl font-extrabold tracking-[-0.03em] text-[#171335]">Delete income record?</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-500">This entry will be removed permanently from your income history.</p>
+            <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 onClick={closeModal}
-                className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
+                className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
               >
-                Cancel
+                Keep record
+              </button>
+              <button
+                onClick={handleConfirmDelete}
+                className="rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(244,63,94,0.20)] transition hover:bg-rose-600"
+              >
+                Delete record
               </button>
             </div>
           </div>

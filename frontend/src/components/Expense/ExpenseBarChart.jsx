@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
+import { BarChart3 } from 'lucide-react';
 import {
   BarChart,
   Bar,
@@ -47,23 +48,57 @@ const ExpenseBarChart = () => {
     fetchExpenses();
   }, []);
 
+  const totalWeek = chartData.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
   return (
-    <section className="w-full min-w-0">
-      <h3 className="text-lg sm:text-xl xl:text-2xl font-bold mb-4 text-[#AF0202]">
-        Expenses in Last 7 Days
-      </h3>
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-3 sm:p-5 xl:p-6 min-w-0">
-        <div className="w-full h-[240px] sm:h-[310px] xl:h-[330px] min-w-0">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tick={{ fontSize: 10 }} minTickGap={6} tickFormatter={(value) => value.slice(5)} />
-              <YAxis tick={{ fontSize: 10 }} width={48} />
-              <Tooltip />
-              <Bar dataKey="amount" fill="#EF4444" radius={[10, 10, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+    <section className="surface-card w-full min-w-0 p-5 sm:p-6">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-[11px] font-bold tracking-[0.14em] text-rose-600 uppercase">7-day trend</p>
+          <h3 className="mt-1 text-xl font-extrabold tracking-[-0.03em] text-[#171335]">Weekly expense activity</h3>
+          <p className="mt-1 text-xs text-slate-400">Daily expense totals for the last seven days.</p>
         </div>
+        <div className="flex items-center gap-3 rounded-2xl bg-rose-50 px-4 py-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500 text-white">
+            <BarChart3 size={18} />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold tracking-[0.1em] text-rose-600 uppercase">7-day total</p>
+            <p className="text-sm font-extrabold text-rose-700">LKR {totalWeek.toLocaleString()}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-[260px] w-full min-w-0 sm:h-[320px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 4 }}>
+            <CartesianGrid vertical={false} stroke="#EEF0F5" strokeDasharray="4 4" />
+            <XAxis
+              dataKey="date"
+              tick={{ fontSize: 11, fill: '#94A3B8' }}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(value) => value.slice(5)}
+            />
+            <YAxis
+              tick={{ fontSize: 11, fill: '#94A3B8' }}
+              width={58}
+              axisLine={false}
+              tickLine={false}
+            />
+            <Tooltip
+              cursor={{ fill: 'rgba(244, 63, 94, 0.05)' }}
+              contentStyle={{
+                borderRadius: '14px',
+                border: '1px solid #E2E8F0',
+                boxShadow: '0 12px 30px rgba(15,23,42,0.10)',
+              }}
+              formatter={(value) => [`LKR ${Number(value || 0).toLocaleString()}`, 'Expense']}
+              labelFormatter={(value) => new Date(value).toLocaleDateString()}
+            />
+            <Bar dataKey="amount" fill="#F43F5E" radius={[8, 8, 3, 3]} maxBarSize={44} />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </section>
   );
